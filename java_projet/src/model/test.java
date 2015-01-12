@@ -2,7 +2,7 @@ package model;
 
 public class test {
 	public test() {
-		//System.out.println("testt\n");
+		System.out.println("testt\n");
 	}
 
 }
