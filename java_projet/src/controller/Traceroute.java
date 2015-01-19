@@ -1,45 +1,61 @@
 package controller;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import model.Processus;
 import view.Gui;
+import view.Tree;
 
 public class Traceroute {
 	
-	public static void main(String[] args) {
-		//System.out.println("testt\n");
-		Process pr = null;
-		ProcessBuilder pb = null;
-		BufferedReader reader = null;
-		Runtime r = null;
-		String line = null;
-		
-		Gui g = new Gui();
-		
+	//Vues attachés au controller:
+	private Gui g;
+	private Tree t;
+	//Modèles attaché au controller:
+	private Processus gp;
+
+	public Traceroute(Processus gp, Gui g, Tree t) {
+		this.gp = gp;
+		this.t = null;
+		this.g = g;
+		//view.setController(this);
+	}
+	
+	public void exec() {		
+		//g.addAction(new ButtonClickListener());	
+		BufferedReader reader = gp.execTraceroute("www.google.com");
+		String line;			
+		int i = 1;
 		try {
-			//Get current directory:
-			//System.out.println("Working Directory = " + System.getProperty("user.dir"));
-			r = Runtime.getRuntime();
-			pb = new ProcessBuilder("java", "-jar", "./fakeroute.jar", "google.fr");
-			pr = pb.start();
-			//ou via commande terminal:
-			/*r = Runtime.getRuntime();
-			pr = r.exec("tracert fr.wikipedia.org");*/
-			reader = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-			
 			line = reader.readLine();
+			
+			//TODO: http://stackoverflow.com/questions/10541157/sscanf-equivalent-in-java
 			while(line != null) {
 				System.out.println(line);
+				String lineSplit[] = line.split(" ");
+				List<String> lineWithoutSpace = new ArrayList<String>();
+				for(int j = 0; j < lineSplit.length; j++){					
+					if(lineSplit[j] != " "){
+						lineWithoutSpace.add(lineSplit[j]);
+					}
+				}
+				if(i > 3 && lineWithoutSpace.size() > 3){
+					if(t == null){
+						t = new Tree(lineWithoutSpace);
+					}
+					else{
+						t.addElemTree(lineWithoutSpace);
+					}					
+				}
 				line = reader.readLine();
-				
-			}
-		}
-		catch(Exception e) {
-			System.out.println("error\n");
-		}
-		
-		
+				i++;
+			}						
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
 	}
 }
 

@@ -1,54 +1,66 @@
 package view;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JTree;
 
 public class Gui extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private JPanel panel;
+	private JTree tree;
+	private JTextField url;
+	private JButton bouton;
 	
 	public Gui() {
-		//System.out.println("GUI crée");
-		//on crée notre fenêtre (frame) avec JFrame:
+		//System.out.println("GUI crï¿½e");
+		//on crÃ©e notre fenï¿½tre (frame) avec JFrame:
 		frame = new JFrame("test");
 		frame.setVisible(true);
 		frame.setSize(300,150);
 		//position au centre:
 		frame.setLocationRelativeTo(null);
-		frame.setTitle("Fenêtre");
+		frame.setTitle("Fenï¿½tre");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		createPanel();
-		//on ajoute notre panel à notre frame:
-		frame.add(panel);
 	}
 	
 	public void createPanel() {
-		panel = new JPanel();
-		//permet de définir la façon qu'un élément se positionne (gridLayout, FlowLayout (permet de placer tous les éléments sur une même ligne tant qu'il y a de la place)):
+		JPanel panel = new JPanel();
+		//permet de dï¿½finir la faï¿½on qu'un ï¿½lï¿½ment se positionne (gridLayout, FlowLayout (permet de placer tous les ï¿½lï¿½ments sur une mï¿½me ligne tant qu'il y a de la place)):
 		panel.setLayout(new FlowLayout());
 
-		JTextField familyName = new JTextField(10);
-		JTextField firstName = new JTextField(10);
+		url = new JTextField(10);
 
-	    familyName.setBounds(10,40,150,25);
-	    firstName.setBounds(10,70,150,25);
+		url.setBounds(10,40,150,25);
 	    
-	    JButton bouton = new JButton("test");
+	    bouton = new JButton("test");
 	    
-	    //panel.add(new JLabel("Family name :"));
-	    panel.add(familyName);
+	    panel.add(url);
 	    //panel.add(new JLabel("First name : "));
-	    panel.add(firstName);
 		panel.add(bouton);
-
+		
+		//on ajoute notre panel ï¿½ notre frame:
+		frame.add(panel);
 		  //JOptionPane.showConfirmDialog(null, panel, "Family and first name : ", JOptionPane.OK_CANCEL_OPTION);
 		
 		//return panel;
 	}
+	
+	public String getUrl(){
+		return url.getText();
+	}
+	
+	/*public void addAction(ActionListener a){
+		bouton.addActionListener(a);
+	}*/
 }
