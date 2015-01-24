@@ -41,3 +41,32 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+.metadata/.lock
+*.log
+.metadata/.plugins/org.eclipse.core.resources/.history/a4/2056e41ab2a100141892979de00c8544
+*.index
+*.markers
+*.dat
+*.version
+*.tree
+*.resources
+*.prefs
+*.csv
+.metadata/.plugins/org.eclipse.jdt.core/externalLibsTimeStamps
+.metadata/.mylyn/repositories.xml.zip
+.metadata/.plugins/org.eclipse.jdt.core/invalidArchivesCache
+.metadata/.plugins/org.eclipse.jdt.core/javaLikeNames.txt
+.metadata/.plugins/org.eclipse.jdt.core/nonChainingJarsCache
+.metadata/.plugins/org.eclipse.jdt.core/savedIndexNames.txt
+*.xml
+*.properties
+.metadata/.plugins/org.eclipse.wst.jsdt.core/externalLibsTimeStamps
+.metadata/.plugins/org.eclipse.wst.jsdt.core/libraries/baseBrowserLibrary.js
+.metadata/.plugins/org.eclipse.wst.jsdt.core/libraries/browserWindow.js
+.metadata/.plugins/org.eclipse.wst.jsdt.core/libraries/dom5.js
+.metadata/.plugins/org.eclipse.wst.jsdt.core/libraries/system.js
+.metadata/.plugins/org.eclipse.wst.jsdt.core/libraries/xhr.js
+.metadata/version.ini
+java_projet/.classpath
+java_projet/.classpath
+*.class

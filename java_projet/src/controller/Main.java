@@ -15,7 +15,7 @@ public class Main {
 			tracert.exec();
 		}
 		catch(Exception e) {
-			System.out.printf("Main error");
+			e.printStackTrace();
 		}
 	}
 }

@@ -37,7 +37,7 @@ public class Tree extends JFrame{
 	public void addElemTree(List<String> elem){
 		DefaultTreeModel model = (DefaultTreeModel)tree.getModel();
 		DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
-		root.add(new DefaultMutableTreeNode(elem.get(2)));
+		root.add(new DefaultMutableTreeNode(elem.get(0)));
 		model.reload(root);
 	}
 	
