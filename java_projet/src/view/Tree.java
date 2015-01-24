@@ -29,9 +29,8 @@ public class Tree extends JFrame{
 	}
 	
 	public void createTree(List<String> firstElem){
-		root = new DefaultMutableTreeNode("Traceroute (click to display)");
+		root = new DefaultMutableTreeNode("Traceroute (" + "Destination : " + firstElem.get(firstElem.size() - 1) + ")");
 		tree = new JTree(root);	
-		root.add(new DefaultMutableTreeNode(firstElem.get(firstElem.size() - 1)));
 	}
 	
 	public void addElemTree(List<String> elem){

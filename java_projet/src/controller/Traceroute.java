@@ -46,13 +46,18 @@ public class Traceroute {
 						String ip = sansPremierCrochet.split("\\]")[0];
 						lineSplit[j] = ip;
 					}
+					else if(lineSplit[j].contains("(") && lineSplit[j].contains(")")){
+						String sansPremierCrochet = lineSplit[j].split("(")[1];
+						String ip = sansPremierCrochet.split(")")[0];
+						lineSplit[j] = ip;						
+					}
 					if(lineSplit[j] != " "){
 						if(lineSplit[j].matches(regex)){
 							lineWithoutSpace.add(lineSplit[j]);
 						}						
 					}
 				}
-				if(i>3 && lineWithoutSpace.size() >= 1){
+				if(lineWithoutSpace.size() >= 1){
 					if(t == null){
 						t = new Tree(lineWithoutSpace);
 					}
