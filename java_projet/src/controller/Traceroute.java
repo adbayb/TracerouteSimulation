@@ -37,7 +37,7 @@ public class Traceroute {
 			line = reader.readLine();			
 			//TODO: http://stackoverflow.com/questions/10541157/sscanf-equivalent-in-java
 			while(line != null) {
-				System.out.println(line);				
+				System.out.println(line);
 				String lineSplit[] = line.split(" ");
 				List<String> lineWithoutSpace = new ArrayList<String>();
 				for(int j = 0; j < lineSplit.length; j++){	
@@ -45,10 +45,10 @@ public class Traceroute {
 						String sansPremierCrochet = lineSplit[j].split("\\[")[1];
 						String ip = sansPremierCrochet.split("\\]")[0];
 						lineSplit[j] = ip;
-					}
+					}					
 					else if(lineSplit[j].contains("(") && lineSplit[j].contains(")")){
-						String sansPremierCrochet = lineSplit[j].split("(")[1];
-						String ip = sansPremierCrochet.split(")")[0];
+						String sansPremierCrochet = lineSplit[j].split("\\(")[1];
+						String ip = sansPremierCrochet.split("\\)")[0];
 						lineSplit[j] = ip;						
 					}
 					if(lineSplit[j] != " "){

@@ -15,27 +15,20 @@ public class Processus {
 		try {
 			//Get current directory:
 			//System.out.println("Working Directory = " + System.getProperty("user.dir"));
-			r = Runtime.getRuntime();
-			pb = new ProcessBuilder("java", "-jar", "./lib/fakeroute.jar", url);
-			pr = pb.start();
-			//ou via commande terminal:
 			/*r = Runtime.getRuntime();
-			pr = r.exec("tracert " + url);*/
+			pb = new ProcessBuilder("java", "-jar", "./lib/fakeroute.jar", url);
+			pr = pb.start();*/
+			//ou via commande terminal:
+			r = Runtime.getRuntime();
+			pr = r.exec("tracert " + url);
 			//return new BufferedReader(new InputStreamReader(pr.getInputStream()));
 			
-			reader = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-			line = reader.readLine();
-			while(line != null) {
-				System.out.println(line);
-				line = reader.readLine();
-				
-			}
+			return new BufferedReader(new InputStreamReader(pr.getInputStream()));
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("error\n");
 			return null;
 		}
-		return reader;
 	}
 }

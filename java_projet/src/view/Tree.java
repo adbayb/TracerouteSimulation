@@ -29,7 +29,7 @@ public class Tree extends JFrame{
 	}
 	
 	public void createTree(List<String> firstElem){
-		root = new DefaultMutableTreeNode("Traceroute (" + "Destination : " + firstElem.get(firstElem.size() - 1) + ")");
+		root = new DefaultMutableTreeNode("Traceroute (" + "Destination : " + firstElem.get(0) + ")");
 		tree = new JTree(root);	
 	}
 	
