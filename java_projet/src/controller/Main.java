@@ -9,14 +9,14 @@ import view.View;
 
 /**
  * 
- * @author SARR Niébé / ADIB Ayoub
+ * @author SARR NiÃ©bÃ© / ADIB Ayoub
  *
  */
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			TreeItem<Ip> rootTree = new TreeItem<Ip>(new Ip("ROOT", "other"));
+			TreeItem<Ip> rootTree = new TreeItem<Ip>(new Ip("Root", "Traceroute"));
 			Tree tree = new Tree(rootTree);
 		    View view = new View(rootTree);
 		    //Processus processus = new Processus();

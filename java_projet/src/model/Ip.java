@@ -2,23 +2,23 @@ package model;
 
 public class Ip {
 	private String ip;
-	private String other;
+	private String description;
 	
-	public Ip(String ip, String other) {
+	public Ip(String ip, String description) {
 		//TODO
 		this.ip = ip;
-		this.other = other;
+		this.description = description;
 	}
 	
 	public String getIp() {
-		return ip;
+		return this.ip;
 	}
 	
-	public String getOther() {
-		return other;
+	public String getDescription() {
+		return this.description;
 	}
 	
 	public String toString() {
-		return getIp()+" "+getOther();
+		return this.getIp()+" "+this.getDescription();
 	}
 }

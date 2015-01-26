@@ -7,7 +7,7 @@ public class Processus {
 	private Process pr;
 	private ProcessBuilder pb;
 	//private BufferedReader reader;
-	private Runtime r;
+	//private Runtime r;
 	
 	public Processus() {
 		//TODO ?
@@ -20,8 +20,8 @@ public class Processus {
 			pb = new ProcessBuilder("java", "-jar", "./lib/fakeroute.jar", url);
 			pr = pb.start();
 			//ou via commande terminal:
-			/*r = Runtime.getRuntime();
-			pr = r.exec("tracert " + url);*/
+			//r = Runtime.getRuntime();
+			//pr = r.exec("tracert " + url);
 			
 			return new BufferedReader(new InputStreamReader(pr.getInputStream()));
 		}

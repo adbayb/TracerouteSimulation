@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 
 /**
  * 
- * @author SARR Niébé / ADIB Noeud
+ * @author SARR NiÃ©bÃ© / ADIB Noeud
  *
  */
 public class View {
@@ -45,7 +45,7 @@ public class View {
 	public void launch(Stage fenetre) throws Exception {
 		StackPane root = new StackPane();
 		
-		//HBox équivalent à BoxLayout avec X_AXIS dans Swing:
+		//HBox Ã©quivalent Ã  BoxLayout avec X_AXIS dans Swing:
 		HBox hbox = new HBox();
 		HBox.setHgrow(lastname, Priority.ALWAYS);
 		HBox.setHgrow(firstname, Priority.ALWAYS);
@@ -56,7 +56,7 @@ public class View {
 		Button button = new Button("add");
 		
 		//button.addEventHandler(ActionEvent.ACTION, controller.getAddStudentListener(lastname,firstname));
-		//addAll permet d'ajouter n éléments à un containeur:
+		//addAll permet d'ajouter n Ã©lÃ©ments Ã  un containeur:
 		hbox.getChildren().addAll(new Label("Lastname:"),lastname,new Label("Firstname:"),firstname,button);
 		
 		/*table.setEditable(true);
@@ -74,17 +74,17 @@ public class View {
 		//System.out.println(table.getItems());
 		table.getColumns().addAll(lastnameCol,firstnameCol);*/
 		
-		/*controller.addItemTree(new Ip("Noeud0", "other"));
-		controller.addItemTree(new Ip("Noeud1", "other"));
-		controller.addItemTree(new Ip("Noeud2", "other"));
-		controller.addItemTree(new Ip("Noeud3", "other"));
-		controller.addItemTree(new Ip("Noeud4", "other"));
-		controller.addItemTree(new Ip("Noeud5", "other"));
-		controller.addNodeTree(new Ip("Noeud10", "other"),"Noeud1");
-		controller.addNodeTree(new Ip("Noeud100", "other"),"Noeud10");*/
+		/*controller.addItem2Root(new Ip("Noeud0", "other"));
+		controller.addItem2Root(new Ip("Noeud1", "other"));
+		controller.addItem2Root(new Ip("Noeud2", "other"));
+		controller.addItem2Root(new Ip("Noeud3", "other"));
+		controller.addItem2Root(new Ip("Noeud4", "other"));
+		controller.addItem2Root(new Ip("Noeud5", "other"));
+		System.out.println(controller.addSearchedItem(new Ip("Noeud10", "other"),"Noeud1"));
+		controller.addSearchedItem(new Ip("Noeud100", "other"),"Noeud10");*/
 		controller.generate();
 		
-		final Label label = new Label("Traceroute JavaFX - SARR Niébé / ADIB Noeud");
+		final Label label = new Label("Traceroute JavaFX - SARR NiÃ©bÃ© / ADIB Noeud");
 		label.setFont(new Font("Arial", 20));
 		
 		//treeView = new TreeView<String>(controller.getTree());
@@ -95,14 +95,14 @@ public class View {
 		vbox.setPadding(new Insets(5, 0, 0, 1));
 		vbox.getChildren().addAll(label, treeView, hbox);
 		
-		//Nous ajoutons tous nos éléments dans l'ordre dans notre super containeur root:
+		//Nous ajoutons tous nos Ã©lÃ©ments dans l'ordre dans notre super containeur root:
 		root.getChildren().addAll(vbox);
 		
-		//on crée notre scène:
+		//on crÃ©e notre scÃ¨ne:
 		fenetre.setScene(new Scene(root,WIDTH,HEIGHT));
-		//on ajoute un titre à notre fenêtre
+		//on ajoute un titre Ã  notre fenÃªtre
 		fenetre.setTitle("mvc");
-		//on affiche notre fenêtre:
+		//on affiche notre fenÃªtre:
 		//fenetre.hide();
 		fenetre.show();
 	}

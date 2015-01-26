@@ -5,21 +5,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.scene.control.TreeItem;
 import javafx.stage.Stage;
-import model.Ip;
 import model.Processus;
 import model.Tree;
 import view.View;
 
 /**
  * 
- * @author SARR NiÈbÈ / ADIB Ayoub
+ * @author SARR Ni√©b√© / ADIB Ayoub
  *
  */
 public class Controller {
-	//dans controller on ajoute les modËles et vues associÈes! les modËles et vues 
-	//ne doivent pas contenir de liens entre eux: tout passe par le controller qui les rÈfÈrencent!
+	//dans controller on ajoute les mod√®les et vues associ√©es! les mod√®les et vues 
+	//ne doivent pas contenir de liens entre eux: tout passe par le controller qui les r√©f√©rencent!
 	
 	//Vue:
 	private final View view;
@@ -39,20 +37,12 @@ public class Controller {
 		view.launch(fenetre);
 	}
 
-	/*public TreeItem<Ip> getTree() {
-		return tree.getTree();
+	/*public boolean addItem2Root(Ip ip) {
+		return tree.addItem2Root(ip);
 	}
 
-	public boolean addItemTree(Ip ip) {
-		tree.addItem(ip);
-		
-		return true;
-	}
-
-	public boolean addNodeTree(Ip ip, String namedNode) {
-		tree.addNode(ip,namedNode);
-		
-		return true;
+	public boolean addSearchedItem(Ip ip, String namedNode) {
+		return tree.addSearchedItem(ip,namedNode);
 	}*/
 	
 	public boolean generate() {
@@ -64,7 +54,6 @@ public class Controller {
 	    		"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
 	    		"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
 	    		"([01]?\\d\\d?|2[0-4]\\d|25[0-5])$"; 
-	    int i = 0;
 		try {
 			line = reader.readLine();			
 			//TODO: http://stackoverflow.com/questions/10541157/sscanf-equivalent-in-java
@@ -73,37 +62,16 @@ public class Controller {
 				String lineSplit[] = line.split(" ");
 				List<String> lineWithoutSpace = new ArrayList<String>();
 				for(int j = 0; j < lineSplit.length; j++){	
-					if(lineSplit[j].contains("[") && lineSplit[j].contains("]")){
-						String sansPremierCrochet = lineSplit[j].split("\\[")[1];
-						String ip = sansPremierCrochet.split("\\]")[0];
-						lineSplit[j] = ip;
-					}					
-					else if(lineSplit[j].contains("(") && lineSplit[j].contains(")")){
-						String sansPremierCrochet = lineSplit[j].split("\\(")[1];
-						String ip = sansPremierCrochet.split("\\)")[0];
-						lineSplit[j] = ip;						
-					}
-					if(lineSplit[j] != " "){
-						if(lineSplit[j].matches(regex)){
-							lineWithoutSpace.add(lineSplit[j]);
-						}						
-					}
+					//fakeroute
+					if(lineSplit[j].matches(regex)){
+						lineWithoutSpace.add(lineSplit[j]);
+					}						
 				}
 				if(lineWithoutSpace.size() >= 1){
-					tree.addItems2Root(lineWithoutSpace);
-					/*for(String list : lineWithoutSpace) {
-						//tree.addINode(new Ip(list,""));
-						//tree.addItem(new Ip(list,""));
-						System.out.println(list);
-					}	
-					System.out.println("fin");*/
+					//On g√©n√©re notre arbre via addItems √† partir de root (tree.getRootTree())
+					tree.addItems(tree.getRootTree(),lineWithoutSpace);
 				}
 				line = reader.readLine();
-				i++;
-				if(i == 7){
-					reader.close();
-					break;
-				}
 			}						
 		} catch (IOException e) {
 			e.printStackTrace();
