@@ -1,21 +1,34 @@
 package controller;
 
-import view.Gui;
-import view.Tree;
-import model.Processus;
+import javafx.application.Application;
+import javafx.scene.control.TreeItem;
+import javafx.stage.Stage;
+import model.Ip;
+import model.Tree;
+import view.View;
 
-public class Main {
-	public static void main(String[] args) {
+/**
+ * 
+ * @author SARR Niébé / ADIB Ayoub
+ *
+ */
+public class Main extends Application {
+	@Override
+	public void start(Stage primaryStage) {
 		try {
-			Processus p = new Processus();
-			Gui g = new Gui();
-			//Tree t = new Tree();
-			Traceroute tracert = new Traceroute(p,g,null);
-			
-			tracert.exec();
-		}
-		catch(Exception e) {
+			TreeItem<Ip> rootTree = new TreeItem<Ip>(new Ip("ROOT", "other"));
+			Tree tree = new Tree(rootTree);
+		    View view = new View(rootTree);
+		    //Processus processus = new Processus();
+		    //Controller controller = new Controller(tree, processus, view);
+		    Controller controller = new Controller(tree, view);
+		    controller.start(primaryStage);
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void main(String[] args) {
+		launch(args);
 	}
 }
