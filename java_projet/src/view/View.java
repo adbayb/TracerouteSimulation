@@ -59,29 +59,23 @@ public class View {
 		//addAll permet d'ajouter n éléments à un containeur:
 		hbox.getChildren().addAll(new Label("Lastname:"),lastname,new Label("Firstname:"),firstname,button);
 		
-		/*table.setEditable(true);
-		TableColumn<Student, String> firstnameCol = new TableColumn<Student, String>("First Name");
-		firstnameCol.setMinWidth(WIDTH/3);
-		firstnameCol.setCellValueFactory(
-				new PropertyValueFactory<Student, String>("firstname"));
-		
-		TableColumn<Student, String> lastnameCol = new TableColumn<Student, String>("Last Name");
-		lastnameCol.setMinWidth(WIDTH/3);
-		lastnameCol.setCellValueFactory(
-				new PropertyValueFactory<Student, String>("lastname"));
-		
-		table.setItems(controller.getStudents());
-		//System.out.println(table.getItems());
-		table.getColumns().addAll(lastnameCol,firstnameCol);*/
-		
+		//DEBUG: Fonction générale de notre modèle Tree (Noeud):
 		/*controller.addItem2Root(new Ip("Noeud0", "other"));
 		controller.addItem2Root(new Ip("Noeud1", "other"));
 		controller.addItem2Root(new Ip("Noeud2", "other"));
 		controller.addItem2Root(new Ip("Noeud3", "other"));
 		controller.addItem2Root(new Ip("Noeud4", "other"));
-		controller.addItem2Root(new Ip("Noeud5", "other"));
+		System.out.println(controller.addItem2Root(new Ip("Noeud5", "other")));
 		System.out.println(controller.addSearchedItem(new Ip("Noeud10", "other"),"Noeud1"));
-		controller.addSearchedItem(new Ip("Noeud100", "other"),"Noeud10");*/
+		System.out.println(controller.addSearchedItem(new Ip("Noeud20", "other"),"Noeud1"));
+		controller.addSearchedItem(new Ip("Noeud100", "other"),"Noeud10");
+		System.out.println(controller.getParent(controller.search(controller.getRoot(),"Noeud1")));
+		System.out.println(controller.getParent(controller.getRoot()));
+		System.out.println(controller.getLastChild(controller.getRoot()));
+		System.out.println(controller.editItem(controller.getRoot(),new Ip("blabla","ayoub")));
+		System.out.println(controller.editItem(controller.search(controller.getRoot(),"Noeud20"),new Ip("adib","ayoub")));
+		*/
+		
 		controller.generate();
 		
 		final Label label = new Label("Traceroute JavaFX - SARR Niébé / ADIB Noeud");

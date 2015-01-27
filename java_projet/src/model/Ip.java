@@ -19,6 +19,7 @@ public class Ip {
 	}
 	
 	public String toString() {
-		return this.getIp()+" "+this.getDescription();
+		//return this.getIp()+" "+this.getDescription();
+		return this.getDescription()+" "+this.getIp();
 	}
 }
