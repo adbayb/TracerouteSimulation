@@ -44,49 +44,6 @@ public class Controller {
 		view.launch(fenetre);
 	}
 
-	//DEBUG pour la vue:
-	public TreeItem<Ip> addItem(TreeItem<Ip> node, Ip ip) {
-		return this.tree.addChild(node,ip);
-	}
-	
-	public TreeItem<Ip> addItem2Root(Ip ip) {
-		return tree.addChild2Root(ip);
-	}
-
-	public TreeItem<Ip> addSearchedItem(Ip ip, String namedNode) {
-		return tree.addSearchedChild(ip,namedNode);
-	}
-	
-	public TreeItem<Ip> getLastChild(TreeItem<Ip> node) {
-		return this.tree.getLastChild(node);
-	}
-	
-	public TreeItem<Ip> getParent(TreeItem<Ip> node) {
-		return this.tree.getParent(node);
-	}
-	
-	public TreeItem<Ip> search(TreeItem<Ip> currentNode, String value) {
-		return this.tree.searchAll(currentNode,value);
-	}
-	
-	public TreeItem<Ip> searchInterval(TreeItem<Ip> fromNode, TreeItem<Ip> toNode, String value) {
-		return this.tree.searchInterval(fromNode,toNode,value);
-	}
-	
-	public TreeItem<Ip> getRoot() {
-		return this.tree.getRoot();
-	}
-	
-	public boolean editItem(TreeItem<Ip> node, Ip ip) {
-		return this.tree.editItem(node,ip);
-	}
-	
-	public List<TreeItem<Ip>> getParents(TreeItem<Ip> fromNode) {
-		return this.tree.getParents(fromNode);
-	}
-	
-	
-	
 	//On aurait pu mettre generate dans un Task pour réaliser les opération de fakeroute en arrière plan
 	//Mais traceroute ne fait pas de long calcul (très rapide) donc inutile ici d'utilise un mode Concurrency
 	//cf pour plus d'informations: http://docs.oracle.com/javafx/2/threads/jfxpub-threads.htm
@@ -126,13 +83,17 @@ public class Controller {
 				//we ignore first line with i > 0:
 				if(lineWithoutSpace.size() >= 1 && i > 0){
 					//On génére notre arbre via addItems à partir de currentNode (débutant à Root)
+					//on stocke dans notre list parent, les ips qui ont été ajoutée, parent sera réutilisé 
+					//à la prochaine itération dans le prochain instance d'ip et sotckera les parents du fils ip:
 					parent = this.tree.addChildren(currentNode,lineWithoutSpace,parent);
-					//Update currentNode:
+					//Update currentNode: nous ajoutons toujours les prochains enfants sur le dernier enfant (pour des soucis de performance):
 					currentNode = this.tree.getLastChild(currentNode);
 					//this.tree.addAllItems(this.tree.getRoot(),lineWithoutSpace,"");
 				}
 				line = reader.readLine();
-				i++;
+				//inutile d'incrémenter après que l'on ait passé la première ligne:
+				if(i<2)
+					i++;
 			}
 			reader.close();
 		} catch (IOException e) {

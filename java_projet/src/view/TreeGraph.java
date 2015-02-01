@@ -32,24 +32,22 @@ public class TreeGraph {
 	}
 	
 	public StackPane setLayout() {
-		//set GraphStream Nodes and Edges (defined in graph):
-		//test:
-		/*this.graph.addNode("A" );
-	    this.graph.addNode("B" );
-	    this.graph.addNode("C" );
-	    //true permet d'afficher les flèches:
-	    this.graph.addEdge("AB", "A", "B",true);
-	    this.graph.addEdge("BC", "B", "C",true);
-	    this.graph.addEdge("CA", "C", "A");*/
-		
-	    //Integrate graph to swing:
+		//Integrate graph to swing:
 		this.viewer.enableAutoLayout();
 		this.viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.EXIT);
 		//permet d'inclure du contenu swing dans javafx:
 		this.swingNode.setContent(this.viewer.addDefaultView(false));
 		//swingNode.setContent(new JRadioButton("test"));
-		//pane.setPrefWidth(WIDTH/3);
 		this.stackPane.getChildren().add(swingNode);
+		
+		//Section size (max width available):
+		this.stackPane.setMaxWidth(Double.MAX_VALUE);
+		//this.stackPane.setMaxHeight(Double.MAX_VALUE);
+		
+		//CSS proprieties:
+		this.stackPane.setStyle("-fx-border-style: solid;"
+		        + "-fx-border-color: black;"
+		        + "-fx-border-width: 2;");
 	    
 		return this.stackPane;
 	}

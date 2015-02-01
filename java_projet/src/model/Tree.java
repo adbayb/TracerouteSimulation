@@ -18,12 +18,12 @@ public class Tree {
 		this.root.setExpanded(true);
 	}
 	
-	//addItem 2 root:
+	//addChild 2 root:
 	public TreeItem<Ip> addChild2Root(Ip ip) {
 		return this.addChild(root,ip);
 	}
 	
-	//add Item to either node:
+	//add Child to either node:
 	public TreeItem<Ip> addChild(TreeItem<Ip> node, Ip ip) {
 		if(node != null) {
 			TreeItem<Ip> item = new TreeItem<Ip>(ip);
@@ -37,9 +37,7 @@ public class Tree {
 		return null;
 	}
 	
-	//add Items to either node:
-	//return boolean? todo:
-	//description indique le niveau des items ajouté au noeuds:
+	//add Children to either node:
 	public ObservableList<TreeItem<Ip>> addChildren(TreeItem<Ip> node, List<String> listIp, ObservableList<TreeItem<Ip>> listParents) {
 		ObservableList<TreeItem<Ip>> result = null;
 		
@@ -57,25 +55,6 @@ public class Tree {
 		
 		return null;
 	}
-	
-	//Ajout d'items à tous les noeuds à partir de node ne disposant pas d'enfants:
-	/*public void addAllItems(TreeItem<Ip> node, List<String> listIp, List<String> parents) {
-		if(node != null) {
-			//Si le noeud n'a pas d'enfant (ie isLeaf() == true), alors on lui ajoute la liste:
-			if(node.isLeaf() == true) {
-				this.addItems(node,listIp,parents);
-			}
-			else {
-				//Récursivité: on met à jour le noeud courant sur lequel on checke s'il dispose d'enfants:
-				for(TreeItem<Ip> currentNode : node.getChildren()) {
-					//todo getParents!!!
-					this.addAllItems(currentNode,listIp,description);
-				}
-			}
-		}
-		
-		return;
-	}*/
 	
 	public TreeItem<Ip> getLastChild(TreeItem<Ip> node) {
 		ObservableList<TreeItem<Ip>> listChildren = null;

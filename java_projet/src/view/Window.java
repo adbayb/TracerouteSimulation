@@ -1,5 +1,9 @@
 package view;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+
 import model.Ip;
 import controller.Controller;
 import javafx.event.ActionEvent;
@@ -7,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.BorderPane;
@@ -24,19 +29,49 @@ import javafx.stage.Stage;
  */
 public class Window {
 
-	static private final int WIDTH = 800;
+	static private final int WIDTH = 600;
 
-	static private final int HEIGHT = 800;
+	static private final int HEIGHT = 600;
 
 	private Controller controller;
 	
 	//Views:
-	private final TreeGraph treeGraph;
-	private final TreeList treeList;
+	private TreeGraph treeGraph;
+	private TreeList treeList;
 	//Control Boxes:
 	private TextField ipField;
 	private Button ipButton;
 	private Button randomIpButton;
+	private Button helpButton;
+	//Sections Component:
+	private BorderPane sectionsWindow;
+	//Help Content:
+	private static final String HELP_TEXT = 
+		    "BLABLABLABLABLA1\n" +
+		    "BLABLABLABLABLA2\n" +
+		    "BLABLABLABLABLA3\n" +
+		    "BLABLABLABLABLA4\n" +
+		    "BLABLABLABLABLA5\n" +
+		    "BLABLABLABLABLA6\n" +
+		    "BLABLABLABLABLA7\n" +
+		    "BLABLABLABLABLA8\n" +
+		    "BLABLABLABLABLA9\n" +
+		    "BLABLABLABLABLA10";
+	
+	//Class to redirect standard output (for example console log) to a TextArea javafx chart:
+	public class ConsoleDebug extends OutputStream {
+		private TextArea text;
+		
+		public ConsoleDebug(TextArea text) {
+				this.text = text;
+		}
+
+		@Override
+		public void write(int arg0) throws IOException {
+			// redirects data to the text area javafx component:
+				this.text.appendText(String.valueOf((char)arg0));
+		}
+	}
 	
 
 	public Window(Controller controller, TreeItem<Ip> rootTree) {
@@ -48,6 +83,9 @@ public class Window {
 		this.ipField = new TextField();
 		this.ipButton = new Button("Validate");
 		this.randomIpButton = new Button("Random IP");
+		this.helpButton = new Button("Help Menu");
+		//Sections Component:
+		this.sectionsWindow = new BorderPane();
 	}
 	
 	private VBox setControlViewBox() {
@@ -56,22 +94,55 @@ public class Window {
 		
 		HBox hbox = new HBox();
 		HBox.setHgrow(this.ipField, Priority.ALWAYS);
-		//HBox.setHgrow(firstname, Priority.ALWAYS);
 		this.ipField.setMaxWidth(Double.MAX_VALUE);
+		//this.ipField.setMaxHeight(Double.MAX_VALUE);
 		this.ipField.setPromptText("IP or HostName");
+		this.helpButton.setMaxWidth(Double.MAX_VALUE);
+		this.helpButton.setMaxHeight(100.00);
 		
 		hbox.getChildren().addAll(new Label("IP"),this.ipField,this.ipButton,this.randomIpButton);
 		//Vbox
-		vbox.setSpacing(10);
-		vbox.setPadding(new Insets(5, 0, 0, 1));
-		vbox.getChildren().addAll(hbox);
+		vbox.setStyle("-fx-border-style: solid;"
+		        + "-fx-border-color: black;"
+		        + "-fx-border-width: 2;");
+		//Espacement entre les éléments:
+		vbox.setSpacing(20);
+		//Padding css:
+		vbox.setPadding(new Insets(10, 5, 0, 5));
+		vbox.getChildren().addAll(hbox,this.helpButton);
+		
+		Label consoleLabel = new Label("Console Output");
+		TextArea textArea = new TextArea();
+		//15 colonnes afin de ne pas empiéter et réduire TreeGraph:
+		textArea.setPrefColumnCount(15);
+		PrintStream printStream = new PrintStream(new ConsoleDebug(textArea));
+		System.setOut(printStream);
+		System.setErr(printStream);
+		vbox.getChildren().addAll(consoleLabel, textArea);
+		textArea.toFront();
+		
+		Label helpContent = new Label(HELP_TEXT);
+		
+		if(this.helpButton != null) {
+			this.helpButton.addEventHandler(ActionEvent.ACTION, event -> {
+				if(vbox.getChildren().contains(helpContent)) {
+					vbox.getChildren().remove(helpContent);
+					//Nous mettons ensuite notre output console en dernier élément noeud graphique du parent (toBack() en premier élément):
+					consoleLabel.toFront();
+					textArea.toFront();
+				}
+				else
+					vbox.getChildren().add(helpContent);
+					consoleLabel.toFront();
+					textArea.toFront();
+			});
+		}
 	    
 		return vbox;
 	}
 	
 	private void setActionButtons() {
 		if(this.ipButton != null) 
-			//ipButton.addEventHandler(ActionEvent.ACTION, event -> {ipButton.setDisable(true);boolean tmp=false;System.out.println(tmp);tmp = this.controller.generate(treeGraph.getView(),ipField.getText()); ipButton.setDisable(false);System.out.println(ipField.getText()+tmp);});
 			this.ipButton.addEventHandler(ActionEvent.ACTION, event -> {
 				//ipButton.setDisable(true); to avoid multi-clicks:
 				this.ipButton.setDisable(true);
@@ -99,64 +170,35 @@ public class Window {
 	public void launch(Stage fenetre) throws Exception {
 		StackPane root = new StackPane();
 		
-		//button.addEventHandler(ActionEvent.ACTION, controller.getAddStudentListener(lastname,firstname));
-		//addAll permet d'ajouter n éléments à un containeur:
-		
-		
-		//DEBUG: Fonction générale de notre modèle Tree (Noeud):
-		/*ObservableList<TreeItem<Ip>> tmp = FXCollections.observableList(new ArrayList<TreeItem<Ip>>());
-		tmp.add(controller.getRoot());
-		ObservableList<TreeItem<Ip>> tmp2 = FXCollections.observableList(new ArrayList<TreeItem<Ip>>());
-		ObservableList<TreeItem<Ip>> tmp3 = FXCollections.observableList(new ArrayList<TreeItem<Ip>>());
-		ObservableList<TreeItem<Ip>> tmp4 = FXCollections.observableList(new ArrayList<TreeItem<Ip>>());
-		controller.addItem2Root(new Ip("Noeud0", tmp));
-		controller.addItem2Root(new Ip("Noeud1", tmp));
-		controller.addItem2Root(new Ip("Noeud2", tmp));
-		controller.addItem2Root(new Ip("Noeud3", tmp));
-		controller.addItem2Root(new Ip("Noeud4", tmp));
-		controller.addItem2Root(new Ip("Noeud5", tmp));
-		tmp2.add(controller.search(controller.getRoot(),"Noeud0"));
-		tmp2.add(controller.search(controller.getRoot(),"Noeud1"));
-		controller.addSearchedItem(new Ip("Noeud10", tmp2),"Noeud1");
-		tmp3.add(controller.search(controller.getRoot(),"Noeud10"));
-		controller.addSearchedItem(new Ip("Noeud100", tmp3),"Noeud10");
-		tmp4.add(controller.search(controller.getRoot(),"Noeud100"));
-		controller.addSearchedItem(new Ip("Noeud1000", tmp4),"Noeud100");
-		System.out.println(controller.search(controller.getRoot(),"Noeud10000"));
-		//System.out.println(controller.searchInterval(controller.search(controller.getRoot(),"Noeud100"),controller.search(controller.getRoot(),"Noeud10000"),"Noeud100"));
-		//System.out.println(controller.getParents(controller.search(controller.getRoot(),"Noeud100"),"other"));
-		controller.generateSingleGraph(treeGraph.getView());*/
-		
-		//controller.generate(treeGraph.getView(), "192.168.1.16");
-		//controller.generate(treeGraph.getView(), "192.168.1.16");
-		
 		this.setActionButtons();
 		VBox vbox = this.setControlViewBox();
 		
-		final Label label = new Label("Traceroute JavaFX - SARR Niébé / ADIB Noeud");
-		label.setFont(new Font("Arial", 20));
+		final Label label = new Label("Traceroute JavaFX - ADIB Ayoub / SARR Niébé");
+		label.setFont(new Font("Calibri", 25));
+		//CSS styles (here padding, we can use instead setLabelPadding() function)):
+		//label.setStyle("-fx-padding: 0px 0px 10px 0px;");
+		label.setStyle("-fx-padding: 5px;");
 		
 		//this.verticalBox.listen();
 		
 		//Intégration de graphstream dans javafx:
-		
-		final BorderPane controlLayout = new BorderPane();  //Set the size of the BorderPane and show its borders //by making them black 
-		//controlLayout.setPrefSize(300,300); 
-		//controlLayout.setStyle("-fx-border-color: black;");
-		controlLayout.setTop(label); 
-		//controlLayout.setLeft(swingNode); 
-		controlLayout.setRight(vbox); 
-		//controlLayout.setRight(verticalBox.setLayout()); 
-		controlLayout.setCenter(treeGraph.setLayout()); 
-		controlLayout.setBottom(treeList.setLayout());
+		//sectionsWindow.setPrefSize(300,300); //borderPane size
+		sectionsWindow.setTop(label);
+		sectionsWindow.setRight(vbox); 
+		sectionsWindow.setCenter(treeGraph.setLayout()); 
+		//controlLayout.setRight(new Label("test")); 
+		sectionsWindow.setBottom(treeList.setLayout());
 		
 		//Nous ajoutons tous nos éléments dans l'ordre dans notre super containeur root:
-		root.getChildren().addAll(controlLayout);
+		root.getChildren().addAll(sectionsWindow);
 		
 		//on crée notre scène:
 		fenetre.setScene(new Scene(root,WIDTH,HEIGHT));
 		//on ajoute un titre à notre fenêtre
-		fenetre.setTitle("mvc");
+		fenetre.setTitle("Traceroute JavaFX - ADIB Ayoub / SARR Niébé");
+		//On set une taille minimale de fenêtre pour une bonne ergonomie:
+		fenetre.setMinHeight(HEIGHT/1.2);
+		fenetre.setMinWidth(WIDTH/1.2);
 		//on affiche notre fenêtre:
 		//fenetre.hide();
 		fenetre.show();

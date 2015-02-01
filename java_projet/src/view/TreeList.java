@@ -23,6 +23,12 @@ public class TreeList {
 	
 	public StackPane setLayout() {
 		this.stackPane.getChildren().add(this.treeView);
+		//CSS:
+		this.stackPane.setStyle("-fx-border-style: solid;"
+		        + "-fx-border-color: black;"
+		        + "-fx-border-width: 2;");
+		//Section size (height:200):
+		this.stackPane.setMaxHeight(200);
 	    
 		return this.stackPane;
 	}
