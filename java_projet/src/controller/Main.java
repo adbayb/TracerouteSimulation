@@ -4,8 +4,6 @@ import javafx.application.Application;
 import javafx.scene.control.TreeItem;
 import javafx.stage.Stage;
 import model.Ip;
-import model.Tree;
-import view.View;
 
 /**
  * 
@@ -13,15 +11,13 @@ import view.View;
  *
  */
 public class Main extends Application {
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			TreeItem<Ip> rootTree = new TreeItem<Ip>(new Ip("Root", "Traceroute"));
-			Tree tree = new Tree(rootTree);
-		    View view = new View(rootTree);
-		    //Processus processus = new Processus();
+			TreeItem<Ip> rootTree = new TreeItem<Ip>(new Ip("Root (Localhost)", null));
 		    //Controller controller = new Controller(tree, processus, view);
-		    Controller controller = new Controller(tree, view);
+		    Controller controller = new Controller(rootTree);
 		    controller.start(primaryStage);
 		} catch(Exception e) {
 			e.printStackTrace();
