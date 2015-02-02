@@ -21,11 +21,11 @@ import javafx.stage.Stage;
 
 /**
  * 
- * @author SARR NiÃ©bÃ© / ADIB Noeud
+ * @author SARR Niébé / ADIB Noeud
  *
  */
 
-//Notre classe principale dÃ©finissant le GUI:
+//Notre classe principale définissant le GUI:
 public class Window {
 
 	static private final int WIDTH = 600;
@@ -53,10 +53,10 @@ public class Window {
 		    "Champs IP: indiquer votre ip ou hostname de\n" +
 		    "destination.\n" +
 		    "Bouton Validate: lance le traitement avec l'IP saisi\n" +
-		    "Bouton Random IP: GÃ©nÃ©re un IP alÃ©atoire et\n" +
+		    "Bouton Random IP: Génére un IP aléatoire et\n" +
 		    "lance le traitement\n" +
 		    "Progress Bar: indique l'avancement des traitements\n" +
-		    "Arbre graphique (Ã  gauche) | Liste (en bas)";
+		    "Arbre graphique (à gauche) | Liste (en bas)";
 	private String ipHostname;
 	
 	//Classe interne pour rediriger la sortie standard vers TextArea Javafx:
@@ -75,6 +75,11 @@ public class Window {
 	}*/
 	
 
+	/**
+	 * @brief Constructeur de la fenêtre (charge le controller, le graphe et l'arbre)
+	 * @param controller : Controller de l'application
+	 * @param rootTree : Arbre qui va être chargé en fonction des Ip
+	 */
 	public Window(Controller controller, TreeItem<NodeIP> rootTree) {
 		//Views:
 		this.controller = controller;
@@ -91,9 +96,13 @@ public class Window {
 		this.ipHostname = new String();
 	}
 	
+	/**
+	 * @brief 
+	 * @param vBox
+	 */
 	private void setControlViewBox(VBox vBox) {
 		VBox vbox = vBox;
-		//HBox Ã©quivalent Ã  BoxLayout avec X_AXIS dans Swing
+		//HBox équivalent à BoxLayout avec X_AXIS dans Swing
 		HBox hbox = new HBox();
 		HBox.setHgrow(this.ipField, Priority.ALWAYS);
 		this.ipField.setMaxWidth(Double.MAX_VALUE);
@@ -107,19 +116,22 @@ public class Window {
 		vbox.setStyle("-fx-border-style: solid;"
 		        + "-fx-border-color: black;"
 		        + "-fx-border-width: 2;");
-		//Espacement entre les Ã©lÃ©ments:
+		//Espacement entre les éléments:
 		vbox.setSpacing(20);
 		//Padding css:
 		vbox.setPadding(new Insets(10, 5, 0, 5));
-		//inclusion des Ã©lÃ©ments dans notre vbox:
+		//inclusion des éléments dans notre vbox:
 		vbox.getChildren().addAll(hbox,new Label("Progress Bar:"), this.controller.getProgressBar(),this.helpButton);
 	    
 		return;
 	}
 	
+	/**
+	 * @brief Définition des différentes évenements (boutons)
+	 */
 	private void setActionButtons() {
-		//ExecutorService permet de mettre des threads en file d'attente (ici Ã  chaque clic) et les exÃ©cuter un par un:
-		//On Ã©vite ainsi bloquer le GUI avec les traitements qui peuvent Ãªtre gÃ©nÃ©rÃ© en parallÃ¨le lors de multi cliques:
+		//ExecutorService permet de mettre des threads en file d'attente (ici à chaque clic) et les exécuter un par un:
+		//On évite ainsi bloquer le GUI avec les traitements qui peuvent être généré en parallèle lors de multi cliques:
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
 		
 		if(this.ipButton != null) 
@@ -155,7 +167,7 @@ public class Window {
 			this.helpButton.addEventHandler(ActionEvent.ACTION, event -> {
 				if(this.vBox.getChildren().contains(helpContent)) {
 					this.vBox.getChildren().remove(helpContent);
-					//Nous mettons ensuite notre progressBar en dernier Ã©lÃ©ment noeud graphique du parent (toBack() en premier Ã©lÃ©ment):
+					//Nous mettons ensuite notre progressBar en dernier élément noeud graphique du parent (toBack() en premier élément):
 					//this.controller.getProgressBar().toFront();
 				}
 				else
@@ -167,34 +179,39 @@ public class Window {
 		return;
 	}
 
+	/**
+	 * @brief Lancement de l'application (chargement et affichage de la fenêtre)
+	 * @param fenetre : Fenêtre qui va être affichée
+	 * @throws Exception
+	 */
 	public void launch(Stage fenetre) throws Exception {
 		StackPane root = new StackPane();
 		
 		this.setActionButtons();
 		this.setControlViewBox(this.vBox);
 		
-		final Label label = new Label("Traceroute JavaFX - ADIB Ayoub / SARR NiÃ©bÃ©");
+		final Label label = new Label("Traceroute JavaFX - ADIB Ayoub / SARR Niébé");
 		label.setFont(new Font("Calibri", 25));
 		//CSS styles (here padding, we can use instead setLabelPadding() function)):
 		label.setStyle("-fx-padding: 5px;");
 		
-		//IntÃ©gration de graphstream dans javafx:
+		//Intégration de graphstream dans javafx:
 		sectionsWindow.setTop(label);
 		sectionsWindow.setRight(this.vBox); 
 		sectionsWindow.setCenter(treeGraph.setLayout()); 
 		sectionsWindow.setBottom(treeList.setLayout());
 		
-		//Nous ajoutons tous nos Ã©lÃ©ments dans l'ordre dans notre super containeur root:
+		//Nous ajoutons tous nos éléments dans l'ordre dans notre super containeur root:
 		root.getChildren().addAll(sectionsWindow);
 		
-		//on crÃ©e notre scÃ¨ne:
+		//on crée notre scène:
 		fenetre.setScene(new Scene(root,WIDTH,HEIGHT));
-		//on ajoute un titre Ã  notre fenÃªtre
-		fenetre.setTitle("Traceroute JavaFX - ADIB Ayoub / SARR NiÃ©bÃ©");
-		//On set une taille minimale de fenÃªtre pour une bonne ergonomie:
+		//on ajoute un titre à notre fenêtre
+		fenetre.setTitle("Traceroute JavaFX - ADIB Ayoub / SARR Niébé");
+		//On set une taille minimale de fenêtre pour une bonne ergonomie:
 		fenetre.setMinHeight(HEIGHT/1.2);
 		fenetre.setMinWidth(WIDTH/1.2);
-		//on affiche notre fenÃªtre:
+		//on affiche notre fenêtre:
 		//fenetre.hide();
 		fenetre.show();
 	}

@@ -7,7 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 
-//Notre modÃ¨le Tree : crÃ©e des noeuds, gÃ¨re la recherche de noeuds, gestion noeud parent/fils [via TreeItem et ModÃ¨le NodeIP]:
+//Notre modèle Tree : crée des noeuds, gère la recherche de noeuds, gestion noeud parent/fils [via TreeItem et Modèle NodeIP]:
 public class Tree {
 	private TreeItem<NodeIP> root;
 	
@@ -17,32 +17,47 @@ public class Tree {
 		this.root.setExpanded(true);
 	}
 	
-	//addChild 2 root:
+	/**
+	 * @brief Ajout d'un node au root
+	 * @param ip : ip qui va être ajouté
+	 * @return l'arbre d'IP
+	 */
 	public TreeItem<NodeIP> addChild2Root(NodeIP ip) {
 		return this.addChild(root,ip);
 	}
 	
-	//Ajout d'un enfant Ã  n'importe quel noeud:
+	/**
+	 * @brief Ajout d'un enfant à n'importe quel noeud:
+	 * @param node : Arbre d'IP
+	 * @param ip : ip qui va être ajouté
+	 * @return l'arbre d'IP
+	 */
 	public TreeItem<NodeIP> addChild(TreeItem<NodeIP> node, NodeIP ip) {
 		if(node != null) {
 			TreeItem<NodeIP> item = new TreeItem<NodeIP>(ip);
 			node.setExpanded(true);
 			node.getChildren().add(item);
 			
-			//Nous retournons l'enfant effectivement ajoutÃ©:
+			//Nous retournons l'enfant effectivement ajouté:
 			return item;
 		}
 		
 		return null;
 	}
 	
-	//ajout d'enfants Ã  n'importe quel noeud (node):
+	/**
+	 * @brief ajout d'enfants à n'importe quel noeud (node):
+	 * @param node 
+	 * @param listIp
+	 * @param listParents
+	 * @return l'arbre d'IP
+	 */
 	public ObservableList<TreeItem<NodeIP>> addChildren(TreeItem<NodeIP> node, List<String> listIp, ObservableList<TreeItem<NodeIP>> listParents) {
 		ObservableList<TreeItem<NodeIP>> result = null;
 		
 		if(node != null) {
 			if(listIp != null) {
-				//on instancie notre observablelist qui contiendra tous les enfants effectivement ajoutÃ©s:
+				//on instancie notre observablelist qui contiendra tous les enfants effectivement ajoutés:
 				result = FXCollections.observableList(new ArrayList<TreeItem<NodeIP>>());
 				node.setExpanded(true);
 				for(String ip : listIp) {
@@ -55,15 +70,19 @@ public class Tree {
 		return null;
 	}
 	
-	//RÃ©cupÃ©ration du dernier enfant Ã  partir de node:
+	/**
+	 * @brief Récupération du dernier enfant à partir de node:
+	 * @param node
+	 * @return l'enfant correspondant ou null
+	 */
 	public TreeItem<NodeIP> getLastChild(TreeItem<NodeIP> node) {
 		ObservableList<TreeItem<NodeIP>> listChildren = null;
 		
 		if(node != null) {
-			//notre fonction getChildren vÃ©rifiera si node a au moins un fils:
+			//notre fonction getChildren vérifiera si node a au moins un fils:
 			listChildren = this.getChildren(node);
 			if(listChildren != null) {
-				//tmpChildNode prendra au fur et Ã  mesure les noeuds de chaque fils jusqu'au dernier:
+				//tmpChildNode prendra au fur et à mesure les noeuds de chaque fils jusqu'au dernier:
 				TreeItem<NodeIP> tmpChildNode = null;
 				for(TreeItem<NodeIP> childNode : listChildren) {
 					tmpChildNode = childNode;
@@ -77,7 +96,11 @@ public class Tree {
 		return null;
 	}
 	
-	//RÃ©cupÃ©ration des enfants:
+	/**
+	 * @brief Récupération des enfants:
+	 * @param node ou la recherche commence
+	 * @return la liste d'Enfants
+	 */
 	public ObservableList<TreeItem<NodeIP>> getChildren(TreeItem<NodeIP> node) {
 		if(node != null) {
 			//Si le noeud a au moins un enfant:
@@ -89,7 +112,11 @@ public class Tree {
 		return null;
 	}
 	
-	//RÃ©cupÃ©ration du pÃ¨re d'un noeud (pÃ¨re unique ici):
+	/**
+	 * @brief Récupération du père d'un noeud (père unique ici):
+	 * @param node
+	 * @return le père
+	 */
 	public TreeItem<NodeIP> getParent(TreeItem<NodeIP> node) {
 		if(node != null) {
 			//getParent() retourne null si pas de parent (par exemple n'a pas de parent donc null):
@@ -98,8 +125,12 @@ public class Tree {
 		return null;
 	}
 	
-	//RÃ©cupÃ©ration de tous les parents de fromNode (pour contrer les restrictions propre Ã  TreeItem (un enfant ne peut avoir qu'un seul parent))
-	//On rÃ©cupÃ¨re tous les parents via les infos du champs from du modÃ¨le Ip (listant les parents de l'ip):
+	/**
+	 * @brief Récupération de tous les parents de fromNode (pour contrer les restrictions propre à TreeItem (un enfant ne peut avoir qu'un seul parent))
+	 * 		On récupère tous les parents via les infos du champs from du modèle Ip (listant les parents de l'ip)
+	 * @param fromNode
+	 * @return liste de Noeuds
+	 */
 	public ObservableList<TreeItem<NodeIP>> getParents(TreeItem<NodeIP> fromNode) {
 		if(fromNode != null)
 			return fromNode.getValue().getFrom();
@@ -108,7 +139,12 @@ public class Tree {
 	}
 	
 
-	//addNode to another node or item:
+	/**
+	 * @brief : Ajout d'un node à un node de l'arbre
+	 * @param ip : node à ajouter
+	 * @param namedNode : ip du node à modifier
+	 * @return
+	 */
 	public TreeItem<NodeIP> addSearchedChild(NodeIP ip, String namedNode) {
 		TreeItem<NodeIP> node = this.searchAll(root, namedNode);
 		
@@ -116,16 +152,29 @@ public class Tree {
 	}
 	
 	/*
-	 * Search for one node from fromNode (compare string object (ip name) vs String value to target) and return address to this node:
-	 * Recherche par rapport au champs String ip du modÃ¨le Ip
+	 * 
+	 * 
+	 */
+	/**
+	 * @brief Search for one node from fromNode (compare string object (ip name) vs String value to target) and return address to this node:
+	 * 		Recherche par rapport au champs String ip du modèle Ip
+	 * @param fromNode
+	 * @param value
+	 * @return la liste de nodes
 	 */
 	public TreeItem<NodeIP> searchAll(TreeItem<NodeIP> fromNode, String value) { 
 
 		return this.searchInterval(fromNode,null,value);
 	}
 	
-	//search node from fromNode (included) to toNode (excluded):
-	//fromNode and toNode must be att different level in tree with toNode more deeper than fromNode:
+	/**
+	 * @brief search node from fromNode (included) to toNode (excluded):
+	 * 		fromNode and toNode must be att different level in tree with toNode more deeper than fromNode:
+	 * @param fromNode
+	 * @param toNode
+	 * @param value
+	 * @return la liste de nodes
+	 */
 	public TreeItem<NodeIP> searchInterval(TreeItem<NodeIP> fromNode, TreeItem<NodeIP> toNode, String value) { 
 		//How to test Strings value (use equals!):
 		//== tests for reference equality.
@@ -137,7 +186,7 @@ public class Tree {
 		else {
 			if(toNode == null || fromNode != toNode) {
 				for(TreeItem<NodeIP> childNode : fromNode.getChildren()) {
-					//search(childNode, value); => seul ne fonctionne pas: on doit rÃ©cupÃ©rer la valeur de retour de notre fonction rÃ©cursive:
+					//search(childNode, value); => seul ne fonctionne pas: on doit récupérer la valeur de retour de notre fonction récursive:
 					TreeItem<NodeIP> findNode = searchInterval(childNode, toNode, value);
 					//si l'on trouve le noeud voulu (ie findNode not null), on retourne sa valeur
 					if(findNode != null) 
@@ -145,13 +194,19 @@ public class Tree {
 				}
 			}
 			else
-			//si aucun Ã©lÃ©ment trouvÃ© dans l'intervalle fromNode - toNode:
+			//si aucun élément trouvé dans l'intervalle fromNode - toNode:
 				return null;
 		}
-		//Si aucune occurrence n'est trouvÃ©e, on retourne null:
+		//Si aucune occurrence n'est trouvée, on retourne null:
 		return null;
 	}
 	
+	/**
+	 * @brief Modifier un node
+	 * @param node
+	 * @param ip
+	 * @return true si la modification s'est bien passée, false sinon
+	 */
 	public boolean editItem(TreeItem<NodeIP> node, NodeIP ip) {
 		if(node != null) {
 			node.setValue(ip);
@@ -162,10 +217,18 @@ public class Tree {
 		return false;
 	}
 	
+	/**
+	 * @brief Récuperation du root de l'arbre
+	 * @return le root
+	 */
 	public TreeItem<NodeIP> getRoot() {
 		return this.root;
 	}
-	
+
+	/**
+	 * @brief Modification du root de l'arbre
+	 * @return true si la modification s'est bien passée, false sinon
+	 */
 	public boolean setRoot(TreeItem<NodeIP> root) {
 		if(root != null) {
 			this.root = root;

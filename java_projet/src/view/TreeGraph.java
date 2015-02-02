@@ -12,7 +12,7 @@ public class TreeGraph implements TreeViewInterface {
 	private StackPane stackPane;
 	private Graph graph;
 	//SwingNode permettant d'inclure des composantes Swing dans JavaFX 
-	//(utiliser Platform.runLater pour Ã©viter l'intÃ©gritÃ© du thread Swing cf controller.java):
+	//(utiliser Platform.runLater pour éviter l'intégrité du thread Swing cf controller.java):
 	private Viewer viewer;
 	private SwingNode swingNode;
 	
@@ -33,7 +33,7 @@ public class TreeGraph implements TreeViewInterface {
 	}
 	
 	public StackPane setLayout() {
-		//IntÃ©gration de GraphStream (utilisant Swing) dans un StackPane (javafx layout):
+		//Intégration de GraphStream (utilisant Swing) dans un StackPane (javafx layout):
 		this.viewer.enableAutoLayout();
 		this.viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.EXIT);
 		//permet d'inclure du contenu swing dans javafx:
@@ -45,7 +45,7 @@ public class TreeGraph implements TreeViewInterface {
 		this.stackPane.setMaxWidth(Double.MAX_VALUE);
 		//this.stackPane.setMaxHeight(Double.MAX_VALUE);
 		
-		//CSS propriÃ©tÃ©s:
+		//CSS propriétés:
 		this.stackPane.setStyle("-fx-border-style: solid;"
 		        + "-fx-border-color: black;"
 		        + "-fx-border-width: 2;");
@@ -64,7 +64,10 @@ public class TreeGraph implements TreeViewInterface {
 		return false;
 	}
 	
-	//RÃ©cupÃ©ration de la Vue associÃ© au graph arbre:
+	/**
+	 * @brief Récupération de la Vue associé au graph arbre:
+	 * @return
+	 */
 	public Graph getView() {
 		return this.graph;
 	}

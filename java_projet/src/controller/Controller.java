@@ -22,7 +22,7 @@ import view.Window;
 
 /**
  * 
- * @author SARR NiÃ©bÃ© / ADIB Ayoub
+ * @author SARR Niébé / ADIB Ayoub
  *
  */
 public class Controller {
@@ -35,7 +35,7 @@ public class Controller {
 	private int progressNow;
 	private int progressHopsMax;
 	
-	//Constructeur: association de nos diffÃ©rents modÃ¨les et vues via le controller:
+	//Constructeur: association de nos différents modèles et vues via le controller:
 	public Controller(TreeItem<NodeIP> rootTree) {
 		this.tree = new Tree(rootTree);
 		this.view = new Window(this, rootTree);
@@ -44,12 +44,21 @@ public class Controller {
 		this.progressNow = 0;
 	}
 	
-	//Fonction permettant de lancer notre Stage (fenetre) JavaFX:
+	/**
+	 * @brief Fonction permettant de lancer notre Stage (fenetre) JavaFX:
+	 * @param fenetre qui va être affichée
+	 * @throws Exception
+	 */
 	public void start(Stage fenetre) throws Exception {
 		
 		view.launch(fenetre);
 	}
 	
+	/**
+	 * @brief Execution du traceroute et generation de l'arbre
+	 * @param hostName : url (ou ip) qui va être passé au Traceroute
+	 * @return true si la generation s'est bien faite, false sinon
+	 */
 	public boolean generateTree(String hostName) {
 		Processus processus = null;
 		BufferedReader reader = null;
@@ -57,18 +66,18 @@ public class Controller {
 		String regex = null;
 		TreeItem<NodeIP> currentNode = null;
 		
-		//On instancie notre classe processus et on lance le jar fakeroute en rÃ©cupÃ©rant l'output dans reader:
+		//On instancie notre classe processus et on lance le jar fakeroute en récupérant l'output dans reader:
 		processus = new Processus();
 		reader = processus.execTraceroute(hostName);
-		//Notre expression rÃ©guliÃ¨re permettant l'isolement d'Ip sur une ligne de l'output du traceroute:
+		//Notre expression régulière permettant l'isolement d'Ip sur une ligne de l'output du traceroute:
 		regex = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
 	    		"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
 	    		"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
 	    		"([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
 		
 		
-		//currentNode permet d'indiquer le noeud Ã  partir duquel on ajoute les 
-		//enfants au fur et Ã  mesure que notre output traceroute est lu:
+		//currentNode permet d'indiquer le noeud à partir duquel on ajoute les 
+		//enfants au fur et à mesure que notre output traceroute est lu:
 		currentNode = this.tree.getRoot();
 		ObservableList<TreeItem<NodeIP>> parent = FXCollections.observableList(new ArrayList<TreeItem<NodeIP>>());
 		parent.add(currentNode);
@@ -84,46 +93,46 @@ public class Controller {
 				List<String> lineWithoutSpace = new ArrayList<String>();
 				for(int j = 0; j < lineSplit.length; j++){	
 					//PARSING TRACERT:
-					//Pour enlever les parenthÃ¨ses du tracert:
+					//Pour enlever les parenthèses du tracert:
 					if(lineSplit[j].contains("[") && lineSplit[j].contains("]")){
 						String sansPremierCrochet = lineSplit[j].split("\\[")[1];
 						String ip = sansPremierCrochet.split("\\]")[0];
 						lineSplit[j] = ip;
 					}
 					//PARSING TRACEROUTE:
-					//Pour enlever les parenthÃ¨ses du traceroute:
+					//Pour enlever les parenthèses du traceroute:
 					if(lineSplit[j].contains("(") && lineSplit[j].contains(")")){
 						String sansPremierCrochet = lineSplit[j].split("\\(")[1];
 						String ip = sansPremierCrochet.split("\\)")[0];
 						lineSplit[j] = ip;
 					}
 					//PARSING FINAL:
-					//Si notre output modifiÃ© (parenthÃ¨se supprimÃ© ou crochet supprimÃ©s) matche le regex dÃ©finit:
+					//Si notre output modifié (parenthèse supprimé ou crochet supprimés) matche le regex définit:
 					if(lineSplit[j].matches(regex)){
-						//Pour Ã©viter les doublons dans le cas de traceroute:
+						//Pour éviter les doublons dans le cas de traceroute:
 						if(lineWithoutSpace.contains(lineSplit[j]) == false)
 							lineWithoutSpace.add(lineSplit[j]);
 					}
 				}
-				//Nous ignorons la premiÃ¨re ligne avec numLine > 0:
+				//Nous ignorons la première ligne avec numLine > 0:
 				if(lineWithoutSpace.size() >= 1 && numLine > 0){
-					//On gÃ©nÃ©re notre arbre via addItems Ã  partir de currentNode (dÃ©butant Ã  Root)
-					//on stocke dans notre list parent, les ips qui ont Ã©tÃ© ajoutÃ©e, parent sera rÃ©utilisÃ© 
-					//Ã  la prochaine itÃ©ration dans le prochain instance d'ip et sotckera les parents du fils ip:
+					//On génére notre arbre via addItems à partir de currentNode (débutant à Root)
+					//on stocke dans notre list parent, les ips qui ont été ajoutée, parent sera réutilisé 
+					//à la prochaine itération dans le prochain instance d'ip et sotckera les parents du fils ip:
 					parent = this.tree.addChildren(currentNode,lineWithoutSpace,parent);
 					//Update currentNode: nous ajoutons toujours les prochains enfants sur le dernier enfant (pour des soucis de performance):
 					currentNode = this.tree.getLastChild(currentNode);
 					//this.tree.addAllItems(this.tree.getRoot(),lineWithoutSpace,"");
 				}
 				line = reader.readLine();
-				//numLine est seulement utile pour vÃ©rifier la premier ligne et ignore le titre de la commande:
+				//numLine est seulement utile pour vérifier la premier ligne et ignore le titre de la commande:
 				if(numLine < 2)
 					numLine++;
-				//Nous augmentons l'avancÃ© de notre progressBar:
+				//Nous augmentons l'avancé de notre progressBar:
 				this.progressNow++;
 				progressBar.setProgress((double)this.progressNow/(double)this.progressHopsMax);
 			}
-			//Nous mettons notre progressBar Ã  1 lorsque la tÃ¢che est finie:
+			//Nous mettons notre progressBar à 1 lorsque la tâche est finie:
 			progressBar.setProgress(1.0);
 			//Fermeture du reader et nettoyage des ressources:
 			reader.close();
@@ -135,10 +144,16 @@ public class Controller {
 		return true;		
 	}
 	
+	/**
+	 * @brief Generation d'un graphe à partir d'une url (ou ip)
+	 * @param graph : Graphe à modifier
+	 * @param hostName : url (ou ip) qui va être passé au Traceroute
+	 * @return true si la generation s'est bien faite, false sinon
+	 */
 	public boolean generate(Graph graph, String hostName) {
 		if(generateTree(hostName) == true) {
 			//on lance notre thread swing (graphstream) plus tard car la politique de threading 
-			//swing empÃªche la crÃ©ation d'un thread raphique dans un autre UI (ici javafx):
+			//swing empêche la création d'un thread raphique dans un autre UI (ici javafx):
 			Platform.runLater(new Runnable() {
 
 				@Override
@@ -155,20 +170,26 @@ public class Controller {
 		return false;
 	}
 	
+	/**
+	 * 
+	 * @param graph : Graphe qui doit être modifié
+	 * @param tree : Arbre qui fut géneré precedemment
+	 * @param node : Liste d'adresses IP
+	 */
 	public void generateGraph(Graph graph,Tree tree, TreeItem<NodeIP> node) {
 		if(node != null) {
-			//si le noeud existe dÃ©jÃ  on ignore:
+			//si le noeud existe déjà on ignore:
 			String nodeLabel = null;
 			String edgeLabel = null;
 			
 			nodeLabel = node.getValue().getIp();
-			//un noeud est unique, on en crÃ©e que s'il n'existe pas (ie null):
+			//un noeud est unique, on en crée que s'il n'existe pas (ie null):
 			if(graph.getNode(nodeLabel) == null) {
 				graph.addNode(nodeLabel);
 				//Label:
 				graph.getNode(nodeLabel).setAttribute("ui.label",nodeLabel);
 			}
-			//CrÃ©ation des liens entre noeud (getParents()):
+			//Création des liens entre noeud (getParents()):
 			//on exclue root comme il n'a pas de parent:
 			if(node != this.tree.getRoot())  {
 				for(TreeItem<NodeIP> parent:tree.getParents(node)) {
@@ -181,7 +202,7 @@ public class Controller {
 			}
 			for(TreeItem<NodeIP> currentNode: node.getChildren()) {
 				//System.out.println(currentNode.getValue().getIp());
-				//RÃ©cursivitÃ©:
+				//Récursivité:
 				this.generateGraph(graph, tree, currentNode);
 			}	
 		}
@@ -189,12 +210,20 @@ public class Controller {
 		return;
 	}
 	
-	//RÃ©cupÃ©ration de la progress Bar pour la Vue:
+	/**
+	 * @brief Récupération de la progress Bar pour la Vue:
+	 * @return la progress bar
+	 */
 	public ProgressBar getProgressBar() {
 		return this.progressBar;
 	}
 	
-	//Fonction permettant de gÃ©nÃ©rer une IP (v4) alÃ©atoire:
+	/**
+	 * @brief Fonction permettant de générer une IP (v4) aléatoire:
+	 * @param min
+	 * @param max
+	 * @return une adresse IP
+	 */
 	public String randomizeIPHostname(int min, int max) {
 		String ipHostname = null;
 		Random rand = new Random();

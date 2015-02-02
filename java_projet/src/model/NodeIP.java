@@ -6,7 +6,7 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 
-//Classe permettant de reprÃ©senter un IP constituÃ© d'un String et de ses parents:
+//Classe permettant de représenter un IP constitué d'un String et de ses parents:
 public class NodeIP {
 	private String ip;
 	//stockera les adresses Ip d'origine:
@@ -17,11 +17,18 @@ public class NodeIP {
 		this.from = from;
 	}
 	
+	/**
+	 * @brief Récuperation de l'IP
+	 * @return l'IP
+	 */
 	public String getIp() {
 		return this.ip;
 	}
 	
-	//RÃ©cupÃ©ration des Ips d'origine (IP parent):
+	/**
+	 * @brief Récupération des Ips d'origine (IP parent)
+	 * @return la liste d'IP
+	 */
 	public ObservableList<TreeItem<NodeIP>> getFrom() {
 		return this.from;
 	}

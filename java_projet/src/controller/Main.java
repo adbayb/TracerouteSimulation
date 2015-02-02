@@ -7,11 +7,16 @@ import model.NodeIP;
 
 /**
  * 
- * @author SARR NiÃ©bÃ© / ADIB Ayoub
+ * @author SARR Niébé / ADIB Ayoub
  *
  */
 
-//Notre classe principale: instanciation de notre environnement graphique javaFx et de notre controlleur principale:
+
+/**
+ * 
+ * @brief Notre classe principale: instanciation de notre environnement graphique javaFx et de notre controlleur principale:
+ *
+ */
 public class Main extends Application {
 	
 	@Override

@@ -43,6 +43,10 @@ public class TreeList implements TreeViewInterface {
 		return false;
 	}
 	
+	/**
+	 * @brief Récuperation de l'arbre d'IP
+	 * @return l'arbre d'IP
+	 */
 	public TreeView<NodeIP> getView() {
 		return this.treeView;
 	}

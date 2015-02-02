@@ -3,7 +3,7 @@ package model;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-//Classe permettant de gÃ©rant l'exÃ©cution de commande systÃ¨me traceroute, tracert ou jar:
+//Classe permettant de gérant l'exécution de commande système traceroute, tracert ou jar:
 public class Processus {
 	private Process pr;
 	//private ProcessBuilder pb;
@@ -14,6 +14,11 @@ public class Processus {
 		
 	}
 	
+	/**
+	 * @brief Execution du traceroute et récuperation du résultat
+	 * @param url : L'url (ou ip) qui va être passé en parametre au traceroute
+	 * @return un BufferedReader contenant le résultat du traceroute
+	 */
 	public BufferedReader execTraceroute(String url){		
 		try {
 			//Get current directory:
