@@ -1,4 +1,4 @@
-package view;
+﻿package view;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -21,11 +21,11 @@ import javafx.stage.Stage;
 
 /**
  * 
- * @author SARR Ni�b� / ADIB Noeud
+ * @author SARR Niébé / ADIB Ayoub
  *
  */
 
-//Notre classe principale d�finissant le GUI:
+//Notre classe principale définissant le GUI:
 public class Window {
 
 	static private final int WIDTH = 600;
@@ -76,9 +76,9 @@ public class Window {
 	
 
 	/**
-	 * @brief Constructeur de la fen�tre (charge le controller, le graphe et l'arbre)
+	 * @brief Constructeur de la fenêtre (charge le controller, le graphe et l'arbre)
 	 * @param controller : Controller de l'application
-	 * @param rootTree : Arbre qui va �tre charg� en fonction des Ip
+	 * @param rootTree : Arbre qui va être chargé en fonction des Ip
 	 */
 	public Window(Controller controller, TreeItem<NodeIP> rootTree) {
 		//Views:
@@ -97,12 +97,12 @@ public class Window {
 	}
 	
 	/**
-	 * @brief 
+	 * @brief Mise en place de nos élément (bouttons...) dans un VBox Layout
 	 * @param vBox
 	 */
 	private void setControlViewBox(VBox vBox) {
 		VBox vbox = vBox;
-		//HBox �quivalent � BoxLayout avec X_AXIS dans Swing
+		//HBox équivalent à BoxLayout avec X_AXIS dans Swing
 		HBox hbox = new HBox();
 		HBox.setHgrow(this.ipField, Priority.ALWAYS);
 		this.ipField.setMaxWidth(Double.MAX_VALUE);
@@ -116,7 +116,7 @@ public class Window {
 		vbox.setStyle("-fx-border-style: solid;"
 		        + "-fx-border-color: black;"
 		        + "-fx-border-width: 2;");
-		//Espacement entre les �l�ments:
+		//Espacement entre les éléments:
 		vbox.setSpacing(20);
 		//Padding css:
 		vbox.setPadding(new Insets(10, 5, 0, 5));
@@ -127,11 +127,11 @@ public class Window {
 	}
 	
 	/**
-	 * @brief D�finition des diff�rentes �venements (boutons)
+	 * @brief Définition des différents évènements (boutons)
 	 */
 	private void setActionButtons() {
-		//ExecutorService permet de mettre des threads en file d'attente (ici � chaque clic) et les ex�cuter un par un:
-		//On �vite ainsi bloquer le GUI avec les traitements qui peuvent �tre g�n�r� en parall�le lors de multi cliques:
+		//ExecutorService permet de mettre des threads en file d'attente (ici à chaque clic) et les exécuter un par un:
+		//On évite ainsi bloquer le GUI avec les traitements qui peuvent être généré en parallèle lors de multi cliques:
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
 		
 		if(this.ipButton != null) 
@@ -167,7 +167,7 @@ public class Window {
 			this.helpButton.addEventHandler(ActionEvent.ACTION, event -> {
 				if(this.vBox.getChildren().contains(helpContent)) {
 					this.vBox.getChildren().remove(helpContent);
-					//Nous mettons ensuite notre progressBar en dernier �l�ment noeud graphique du parent (toBack() en premier �l�ment):
+					//Nous mettons ensuite notre progressBar en dernier élément noeud graphique du parent (toBack() en premier �l�ment):
 					//this.controller.getProgressBar().toFront();
 				}
 				else
@@ -180,8 +180,8 @@ public class Window {
 	}
 
 	/**
-	 * @brief Lancement de l'application (chargement et affichage de la fen�tre)
-	 * @param fenetre : Fen�tre qui va �tre affich�e
+	 * @brief Lancement de l'application (chargement et affichage de la fenêtre)
+	 * @param fenetre : Fenêtre qui va �tre affich�e
 	 * @throws Exception
 	 */
 	public void launch(Stage fenetre) throws Exception {
@@ -195,16 +195,16 @@ public class Window {
 		//CSS styles (here padding, we can use instead setLabelPadding() function)):
 		label.setStyle("-fx-padding: 5px;");
 		
-		//Int�gration de graphstream dans javafx:
+		//Intégration de graphstream dans javafx:
 		sectionsWindow.setTop(label);
 		sectionsWindow.setRight(this.vBox); 
 		sectionsWindow.setCenter(treeGraph.setLayout()); 
 		sectionsWindow.setBottom(treeList.setLayout());
 		
-		//Nous ajoutons tous nos �l�ments dans l'ordre dans notre super containeur root:
+		//Nous ajoutons tous nos éléments dans l'ordre dans notre super containeur root:
 		root.getChildren().addAll(sectionsWindow);
 		
-		//on cr�e notre sc�ne:
+		//on crée notre sc�ne:
 		fenetre.setScene(new Scene(root,WIDTH,HEIGHT));
 		//on ajoute un titre � notre fen�tre
 		fenetre.setTitle("Traceroute JavaFX - ADIB Ayoub / SARR Niébé");

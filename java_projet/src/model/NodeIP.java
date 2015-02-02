@@ -1,4 +1,4 @@
-package model;
+ï»¿package model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +8,11 @@ import javafx.scene.control.TreeItem;
 
 /**
  * 
- * @author SARR Niébé / ADIB Noeud
+ * @author SARR NiÃ©bÃ© / ADIB Ayoub
  *
  */
 
-//Classe permettant de représenter un IP constitué d'un String et de ses parents:
+//Classe permettant de reprÃ©senter un IP constituÃ© d'un String et de ses parents:
 public class NodeIP {
 	private String ip;
 	//stockera les adresses Ip d'origine:
@@ -24,7 +24,7 @@ public class NodeIP {
 	}
 	
 	/**
-	 * @brief Récuperation de l'IP
+	 * @brief RÃ©cuperation de l'IP
 	 * @return l'IP
 	 */
 	public String getIp() {
@@ -32,7 +32,7 @@ public class NodeIP {
 	}
 	
 	/**
-	 * @brief Récupération des Ips d'origine (IP parent)
+	 * @brief RÃ©cupÃ©ration des Ips d'origine (IP parent)
 	 * @return la liste d'IP
 	 */
 	public ObservableList<TreeItem<NodeIP>> getFrom() {

@@ -1,30 +1,30 @@
-package view;
+ï»¿package view;
 
 import javafx.scene.layout.StackPane;
 
 /**
  * 
- * @author SARR Niébé / ADIB Noeud
+ * @author SARR NiÃ©bÃ© / ADIB Ayoub
  *
  */
 
 public interface TreeViewInterface {
 	/***
-	 * @brief Récupration du panel
+	 * @brief RÃ©cupration du panel
 	 * @return le panel
 	 */
 	public StackPane getLayout();
 	
 	/**
-	 * @brief Création du panel
-	 * @return le panel modifié
+	 * @brief CrÃ©ation du panel
+	 * @return le panel modifiÃ©
 	 */
 	public StackPane setLayout();
 	
 	/**
 	 * @brief Changement du contenu du panel
 	 * @param pane
-	 * @return le panel modifié
+	 * @return le panel modifiÃ©
 	 */
 	public boolean changeLayout(StackPane pane);
 }

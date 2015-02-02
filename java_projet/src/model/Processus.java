@@ -1,15 +1,15 @@
-package model;
+ï»¿package model;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 /**
  * 
- * @author SARR Niébé / ADIB Noeud
+ * @author SARR NiÃ©bÃ© / ADIB Ayoub
  *
  */
 
-//Classe permettant de gérant l'exécution de commande système traceroute, tracert ou jar:
+//Classe permettant de gzrant l'exÃ©cution de commande systÃ¨me traceroute, tracert ou jar:
 public class Processus {
 	private Process pr;
 	//private ProcessBuilder pb;
@@ -21,9 +21,9 @@ public class Processus {
 	}
 	
 	/**
-	 * @brief Execution du traceroute et récuperation du résultat
-	 * @param url : L'url (ou ip) qui va être passé en parametre au traceroute
-	 * @return un BufferedReader contenant le résultat du traceroute
+	 * @brief Execution du traceroute et rÃ©cuperation du rÃ©sultat
+	 * @param url : L'url (ou ip) qui va Ãªtre passÃ© en parametre au traceroute
+	 * @return un BufferedReader contenant le rÃ©sultat du traceroute
 	 */
 	public BufferedReader execTraceroute(String url){		
 		try {

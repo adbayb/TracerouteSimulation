@@ -1,4 +1,4 @@
-package view;
+ï»¿package view;
 
 import model.NodeIP;
 import javafx.scene.control.TreeItem;
@@ -7,7 +7,7 @@ import javafx.scene.layout.StackPane;
 
 /**
  * 
- * @author SARR Niébé / ADIB Noeud
+ * @author SARR NiÃ©bÃ© / ADIB Ayoub
  *
  */
 
@@ -50,7 +50,7 @@ public class TreeList implements TreeViewInterface {
 	}
 	
 	/**
-	 * @brief Récuperation de l'arbre d'IP
+	 * @brief RÃ©cuperation de l'arbre d'IP
 	 * @return l'arbre d'IP
 	 */
 	public TreeView<NodeIP> getView() {

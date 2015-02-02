@@ -1,4 +1,4 @@
-package controller;
+ï»¿package controller;
 
 import javafx.application.Application;
 import javafx.scene.control.TreeItem;
@@ -7,7 +7,7 @@ import model.NodeIP;
 
 /**
  * 
- * @author SARR Niébé / ADIB Ayoub
+ * @author SARR NiÃ©bÃ© / ADIB Ayoub
  *
  */
 
