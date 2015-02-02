@@ -8,7 +8,7 @@ import javafx.scene.layout.StackPane;
 
 //Graph view:
 //StackPane Layout for TreeGraph:
-public class TreeGraph {
+public class TreeGraph implements TreeViewInterface {
 	private StackPane stackPane;
 	private Graph graph;
 	//SwingNode permettant d'inclure des composantes Swing dans JavaFX 

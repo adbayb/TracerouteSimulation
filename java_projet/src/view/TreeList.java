@@ -7,7 +7,7 @@ import javafx.scene.layout.StackPane;
 
 //TreeView view:
 //StackPane Layout pour TreeList:
-public class TreeList {
+public class TreeList implements TreeViewInterface {
 	private StackPane stackPane;
 	private TreeView<NodeIP> treeView;
 	
