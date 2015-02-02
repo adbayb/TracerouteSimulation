@@ -8,7 +8,6 @@ import java.util.Random;
 
 import org.graphstream.graph.Graph;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ProgressBar;
