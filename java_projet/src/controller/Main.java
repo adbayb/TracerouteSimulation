@@ -3,20 +3,21 @@ package controller;
 import javafx.application.Application;
 import javafx.scene.control.TreeItem;
 import javafx.stage.Stage;
-import model.Ip;
+import model.NodeIP;
 
 /**
  * 
  * @author SARR Niébé / ADIB Ayoub
  *
  */
+
+//Notre classe principale: instanciation de notre environnement graphique javaFx et de notre controlleur principale:
 public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			TreeItem<Ip> rootTree = new TreeItem<Ip>(new Ip("Root (Localhost)", null));
-		    //Controller controller = new Controller(tree, processus, view);
+			TreeItem<NodeIP> rootTree = new TreeItem<NodeIP>(new NodeIP("Root (Localhost)", null));
 		    Controller controller = new Controller(rootTree);
 		    controller.start(primaryStage);
 		} catch(Exception e) {

@@ -1,19 +1,19 @@
 package view;
 
-import model.Ip;
+import model.NodeIP;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.StackPane;
 
 //TreeView view:
-//StackPane Layout for TreeList:
+//StackPane Layout pour TreeList:
 public class TreeList {
 	private StackPane stackPane;
-	private TreeView<Ip> treeView;
+	private TreeView<NodeIP> treeView;
 	
-	public TreeList(TreeItem<Ip> rootTree) {
+	public TreeList(TreeItem<NodeIP> rootTree) {
 		this.stackPane = new StackPane();
-		this.treeView = new TreeView<Ip>(rootTree);
+		this.treeView = new TreeView<NodeIP>(rootTree);
 	}
 	
 	public StackPane getLayout() {
@@ -43,7 +43,7 @@ public class TreeList {
 		return false;
 	}
 	
-	public TreeView<Ip> getView() {
+	public TreeView<NodeIP> getView() {
 		return this.treeView;
 	}
 }

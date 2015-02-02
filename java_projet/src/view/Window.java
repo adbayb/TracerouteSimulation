@@ -1,17 +1,14 @@
 package view;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
-
-import model.Ip;
+import model.NodeIP;
 import controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.BorderPane;
@@ -27,6 +24,8 @@ import javafx.stage.Stage;
  * @author SARR Niébé / ADIB Noeud
  *
  */
+
+//Notre classe principale définissant le GUI:
 public class Window {
 
 	static private final int WIDTH = 600;
@@ -45,21 +44,23 @@ public class Window {
 	private Button helpButton;
 	//Sections Component:
 	private BorderPane sectionsWindow;
+	private VBox vBox;
 	//Help Content:
 	private static final String HELP_TEXT = 
-		    "BLABLABLABLABLA1\n" +
-		    "BLABLABLABLABLA2\n" +
-		    "BLABLABLABLABLA3\n" +
-		    "BLABLABLABLABLA4\n" +
-		    "BLABLABLABLABLA5\n" +
-		    "BLABLABLABLABLA6\n" +
-		    "BLABLABLABLABLA7\n" +
-		    "BLABLABLABLABLA8\n" +
-		    "BLABLABLABLABLA9\n" +
-		    "BLABLABLABLABLA10";
+		    "Ce programme Java permet de tracer les chemins\n" +
+		    "possibles d'un IP a vers un IP b. Le GUI contient:\n" +
+		    "\n" +
+		    "Champs IP: indiquer votre ip ou hostname de\n" +
+		    "destination.\n" +
+		    "Bouton Validate: lance le traitement avec l'IP saisi\n" +
+		    "Bouton Random IP: Génére un IP aléatoire et\n" +
+		    "lance le traitement\n" +
+		    "Progress Bar: indique l'avancement des traitements\n" +
+		    "Arbre graphique (à gauche) | Liste (en bas)";
+	private String ipHostname;
 	
-	//Class to redirect standard output (for example console log) to a TextArea javafx chart:
-	public class ConsoleDebug extends OutputStream {
+	//Classe interne pour rediriger la sortie standard vers TextArea Javafx:
+	/*public class ConsoleDebug extends OutputStream {
 		private TextArea text;
 		
 		public ConsoleDebug(TextArea text) {
@@ -69,12 +70,12 @@ public class Window {
 		@Override
 		public void write(int arg0) throws IOException {
 			// redirects data to the text area javafx component:
-				this.text.appendText(String.valueOf((char)arg0));
+			this.text.appendText(String.valueOf((char)arg0));
 		}
-	}
+	}*/
 	
 
-	public Window(Controller controller, TreeItem<Ip> rootTree) {
+	public Window(Controller controller, TreeItem<NodeIP> rootTree) {
 		//Views:
 		this.controller = controller;
 		treeGraph = new TreeGraph();
@@ -86,12 +87,13 @@ public class Window {
 		this.helpButton = new Button("Help Menu");
 		//Sections Component:
 		this.sectionsWindow = new BorderPane();
+		this.vBox = new VBox();
+		this.ipHostname = new String();
 	}
 	
-	private VBox setControlViewBox() {
-		//HBox équivalent à BoxLayout avec X_AXIS dans Swing:
-		VBox vbox = new VBox();
-		
+	private void setControlViewBox(VBox vBox) {
+		VBox vbox = vBox;
+		//HBox équivalent à BoxLayout avec X_AXIS dans Swing
 		HBox hbox = new HBox();
 		HBox.setHgrow(this.ipField, Priority.ALWAYS);
 		this.ipField.setMaxWidth(Double.MAX_VALUE);
@@ -109,58 +111,56 @@ public class Window {
 		vbox.setSpacing(20);
 		//Padding css:
 		vbox.setPadding(new Insets(10, 5, 0, 5));
-		vbox.getChildren().addAll(hbox,this.helpButton);
-		
-		Label consoleLabel = new Label("Console Output");
-		TextArea textArea = new TextArea();
-		//15 colonnes afin de ne pas empiéter et réduire TreeGraph:
-		textArea.setPrefColumnCount(15);
-		PrintStream printStream = new PrintStream(new ConsoleDebug(textArea));
-		System.setOut(printStream);
-		System.setErr(printStream);
-		vbox.getChildren().addAll(consoleLabel, textArea);
-		textArea.toFront();
-		
-		Label helpContent = new Label(HELP_TEXT);
-		
-		if(this.helpButton != null) {
-			this.helpButton.addEventHandler(ActionEvent.ACTION, event -> {
-				if(vbox.getChildren().contains(helpContent)) {
-					vbox.getChildren().remove(helpContent);
-					//Nous mettons ensuite notre output console en dernier élément noeud graphique du parent (toBack() en premier élément):
-					consoleLabel.toFront();
-					textArea.toFront();
-				}
-				else
-					vbox.getChildren().add(helpContent);
-					consoleLabel.toFront();
-					textArea.toFront();
-			});
-		}
+		//inclusion des éléments dans notre vbox:
+		vbox.getChildren().addAll(hbox,new Label("Progress Bar:"), this.controller.getProgressBar(),this.helpButton);
 	    
-		return vbox;
+		return;
 	}
 	
 	private void setActionButtons() {
+		//ExecutorService permet de mettre des threads en file d'attente (ici à chaque clic) et les exécuter un par un:
+		//On évite ainsi bloquer le GUI avec les traitements qui peuvent être généré en parallèle lors de multi cliques:
+		ExecutorService executorService = Executors.newFixedThreadPool(10);
+		
 		if(this.ipButton != null) 
 			this.ipButton.addEventHandler(ActionEvent.ACTION, event -> {
 				//ipButton.setDisable(true); to avoid multi-clicks:
-				this.ipButton.setDisable(true);
-				this.controller.generate(treeGraph.getView(),ipField.getText()); 
-				this.ipButton.setDisable(false);
+				ipHostname = ipField.getText();
+				//on met notre thread en file:
+				executorService.submit(new Runnable() {
+				    public void run() {
+				    	controller.generate(treeGraph.getView(),ipHostname);
+				    }
+				});
 			});
 		
 		if(this.randomIpButton != null) {
 			this.randomIpButton.addEventHandler(ActionEvent.ACTION, event -> {
-				String ipHostname = null;
-				
 				//ipButton.setDisable(true); to avoid multi-clicks:
-				this.randomIpButton.setDisable(true);
+				//this.randomIpButton.setDisable(true);
 				if((ipHostname = this.controller.randomizeIPHostname(0,255)) != null) {
 					//System.out.println(ipHostname); 
-					this.controller.generate(treeGraph.getView(),ipHostname); 
+					executorService.submit(new Runnable() {
+					    public void run() {
+					    	controller.generate(treeGraph.getView(),ipHostname);
+					    }
+					});
 				}
-				this.randomIpButton.setDisable(false);
+				//this.randomIpButton.setDisable(false);
+			});
+		}
+		//Help Action:
+		Label helpContent = new Label(HELP_TEXT);
+		if(this.helpButton != null) {
+			this.helpButton.addEventHandler(ActionEvent.ACTION, event -> {
+				if(this.vBox.getChildren().contains(helpContent)) {
+					this.vBox.getChildren().remove(helpContent);
+					//Nous mettons ensuite notre progressBar en dernier élément noeud graphique du parent (toBack() en premier élément):
+					//this.controller.getProgressBar().toFront();
+				}
+				else
+					this.vBox.getChildren().add(helpContent);
+					//this.controller.getProgressBar().toFront();
 			});
 		}
 		
@@ -171,22 +171,17 @@ public class Window {
 		StackPane root = new StackPane();
 		
 		this.setActionButtons();
-		VBox vbox = this.setControlViewBox();
+		this.setControlViewBox(this.vBox);
 		
 		final Label label = new Label("Traceroute JavaFX - ADIB Ayoub / SARR Niébé");
 		label.setFont(new Font("Calibri", 25));
 		//CSS styles (here padding, we can use instead setLabelPadding() function)):
-		//label.setStyle("-fx-padding: 0px 0px 10px 0px;");
 		label.setStyle("-fx-padding: 5px;");
 		
-		//this.verticalBox.listen();
-		
 		//Intégration de graphstream dans javafx:
-		//sectionsWindow.setPrefSize(300,300); //borderPane size
 		sectionsWindow.setTop(label);
-		sectionsWindow.setRight(vbox); 
+		sectionsWindow.setRight(this.vBox); 
 		sectionsWindow.setCenter(treeGraph.setLayout()); 
-		//controlLayout.setRight(new Label("test")); 
 		sectionsWindow.setBottom(treeList.setLayout());
 		
 		//Nous ajoutons tous nos éléments dans l'ordre dans notre super containeur root:
@@ -203,8 +198,4 @@ public class Window {
 		//fenetre.hide();
 		fenetre.show();
 	}
-
-	/*public void setController(Controller controller) {
-		this.controller = controller;
-	}*/
 }
