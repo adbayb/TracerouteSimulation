@@ -6,6 +6,12 @@ import org.graphstream.ui.view.Viewer;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.layout.StackPane;
 
+/**
+ * 
+ * @author SARR Niébé / ADIB Noeud
+ *
+ */
+
 //Graph view:
 //StackPane Layout for TreeGraph:
 public class TreeGraph implements TreeViewInterface {

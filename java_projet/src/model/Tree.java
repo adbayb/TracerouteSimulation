@@ -7,6 +7,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 
+/**
+ * 
+ * @author SARR Niébé / ADIB Noeud
+ *
+ */
+
 //Notre modèle Tree : crée des noeuds, gère la recherche de noeuds, gestion noeud parent/fils [via TreeItem et Modèle NodeIP]:
 public class Tree {
 	private TreeItem<NodeIP> root;
@@ -151,10 +157,6 @@ public class Tree {
 		return this.addChild(node, ip);
 	}
 	
-	/*
-	 * 
-	 * 
-	 */
 	/**
 	 * @brief Search for one node from fromNode (compare string object (ip name) vs String value to target) and return address to this node:
 	 * 		Recherche par rapport au champs String ip du modèle Ip

@@ -5,6 +5,12 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.StackPane;
 
+/**
+ * 
+ * @author SARR Niébé / ADIB Noeud
+ *
+ */
+
 //TreeView view:
 //StackPane Layout pour TreeList:
 public class TreeList implements TreeViewInterface {

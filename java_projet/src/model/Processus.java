@@ -3,6 +3,12 @@ package model;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+/**
+ * 
+ * @author SARR Niébé / ADIB Noeud
+ *
+ */
+
 //Classe permettant de gérant l'exécution de commande système traceroute, tracert ou jar:
 public class Processus {
 	private Process pr;

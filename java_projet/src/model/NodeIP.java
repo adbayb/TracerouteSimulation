@@ -6,6 +6,12 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 
+/**
+ * 
+ * @author SARR Niébé / ADIB Noeud
+ *
+ */
+
 //Classe permettant de représenter un IP constitué d'un String et de ses parents:
 public class NodeIP {
 	private String ip;

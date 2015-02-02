@@ -25,6 +25,7 @@ import view.Window;
  * @author SARR Niébé / ADIB Ayoub
  *
  */
+ 
 public class Controller {
 	//Vue:
 	private Window view;
@@ -171,7 +172,7 @@ public class Controller {
 	}
 	
 	/**
-	 * 
+	 * @brief Ajout des noeuds graphiques (Arbre graphique) via GraphStream
 	 * @param graph : Graphe qui doit être modifié
 	 * @param tree : Arbre qui fut géneré precedemment
 	 * @param node : Liste d'adresses IP

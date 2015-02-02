@@ -2,6 +2,12 @@ package view;
 
 import javafx.scene.layout.StackPane;
 
+/**
+ * 
+ * @author SARR Niébé / ADIB Noeud
+ *
+ */
+
 public interface TreeViewInterface {
 	/***
 	 * @brief Récupration du panel
