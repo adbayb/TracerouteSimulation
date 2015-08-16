@@ -1,4 +1,4 @@
-﻿package view;
+package view;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -120,7 +120,7 @@ public class Window {
 		vbox.setSpacing(20);
 		//Padding css:
 		vbox.setPadding(new Insets(10, 5, 0, 5));
-		//inclusion des �l�ments dans notre vbox:
+		//inclusion des ?l?ments dans notre vbox:
 		vbox.getChildren().addAll(hbox,new Label("Progress Bar:"), this.controller.getProgressBar(),this.helpButton);
 	    
 		return;
@@ -167,7 +167,7 @@ public class Window {
 			this.helpButton.addEventHandler(ActionEvent.ACTION, event -> {
 				if(this.vBox.getChildren().contains(helpContent)) {
 					this.vBox.getChildren().remove(helpContent);
-					//Nous mettons ensuite notre progressBar en dernier élément noeud graphique du parent (toBack() en premier �l�ment):
+					//Nous mettons ensuite notre progressBar en dernier élément noeud graphique du parent (toBack() en premier ?l?ment):
 					//this.controller.getProgressBar().toFront();
 				}
 				else
@@ -181,7 +181,7 @@ public class Window {
 
 	/**
 	 * @brief Lancement de l'application (chargement et affichage de la fenêtre)
-	 * @param fenetre : Fenêtre qui va �tre affich�e
+	 * @param fenetre : Fenêtre qui va ?tre affich?e
 	 * @throws Exception
 	 */
 	public void launch(Stage fenetre) throws Exception {
@@ -204,14 +204,14 @@ public class Window {
 		//Nous ajoutons tous nos éléments dans l'ordre dans notre super containeur root:
 		root.getChildren().addAll(sectionsWindow);
 		
-		//on crée notre sc�ne:
+		//on crée notre sc?ne:
 		fenetre.setScene(new Scene(root,WIDTH,HEIGHT));
-		//on ajoute un titre � notre fen�tre
+		//on ajoute un titre ? notre fen?tre
 		fenetre.setTitle("Traceroute JavaFX - ADIB Ayoub / SARR Niébé");
-		//On set une taille minimale de fen�tre pour une bonne ergonomie:
+		//On set une taille minimale de fen?tre pour une bonne ergonomie:
 		fenetre.setMinHeight(HEIGHT/1.2);
 		fenetre.setMinWidth(WIDTH/1.2);
-		//on affiche notre fen�tre:
+		//on affiche notre fen?tre:
 		//fenetre.hide();
 		fenetre.show();
 	}
