@@ -190,7 +190,7 @@ public class Window {
 		this.setActionButtons();
 		this.setControlViewBox(this.vBox);
 		
-		final Label label = new Label("Traceroute JavaFX - ADIB Ayoub / SARR Niébé");
+		final Label label = new Label("Traceroute Simulation with JavaFX - ADIB Ayoub / SARR Niébé");
 		label.setFont(new Font("Calibri", 25));
 		//CSS styles (here padding, we can use instead setLabelPadding() function)):
 		label.setStyle("-fx-padding: 5px;");
